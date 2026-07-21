@@ -1,0 +1,19 @@
+name: Update IL VOLO News
+
+on:
+  schedule:
+    - cron: "0 */6 * * *"
+  workflow_dispatch:
+
+jobs:
+  update-news:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Display update message
+        run: |
+          echo "Checking for the latest IL VOLO news..."
+          echo "This workflow is ready for the next stage."
