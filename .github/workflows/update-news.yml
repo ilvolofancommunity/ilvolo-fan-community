@@ -13,7 +13,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Display update message
+          - name: Run news updater
         run: |
-          echo "Checking for the latest IL VOLO news..."
-          echo "This workflow is ready for the next stage."
+          python scripts/update-news.py
+
+      - name: Commit updated news
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add news.json
+          git commit -m "Update IL VOLO news" || echo "No changes to commit"
+          git push
