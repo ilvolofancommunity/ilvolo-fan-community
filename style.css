@@ -187,3 +187,33 @@ font-size:18px;
 }
 
 }
+#about{
+padding:90px 8%;
+text-align:center;
+background:#161616;
+}
+
+.about-boxes{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:30px;
+margin-top:50px;
+}
+
+.box{
+background:#222;
+padding:30px;
+border-radius:15px;
+border:1px solid rgba(255,215,0,.3);
+transition:.3s;
+}
+
+.box:hover{
+transform:translateY(-8px);
+border-color:gold;
+}
+
+.box h3{
+color:gold;
+margin-bottom:15px;
+}
