@@ -1,46 +1,20 @@
 fetch("news.json")
   .then(response => response.json())
   .then(news => {
+    const container = document.getElementById("home-news");
 
-    const newsContainer = document.getElementById("news-container");
-    const homeContainer = document.getElementById("home-news");
+    if (!container) return;
 
-    function render(container, articles, limit = articles.length) {
-      if (!container) return;
+    container.innerHTML = "";
 
-      container.innerHTML = "";
-
-      articles.slice(0, limit).forEach(article => {
-
-        const item = document.createElement("div");
-
-        item.className = "news-card";
-
-        item.innerHTML = `
-          <h3>${article.title}</h3>
-          <p>${article.published}</p>
-          <a href="${article.link}" target="_blank">
-            Read Full Article
-          </a>
-        `;
-
-        container.appendChild(item);
-
-      });
-    }
-
-    render(newsContainer, news);
-    render(homeContainer, news, 3);
-
-  })
-  .catch(() => {
-
-    if (document.getElementById("news-container"))
-      document.getElementById("news-container").innerHTML =
-        "<p>Unable to load news.</p>";
-
-    if (document.getElementById("home-news"))
-      document.getElementById("home-news").innerHTML =
-        "<p>Unable to load news.</p>";
-
+    news.forEach(item => {
+      container.innerHTML += `
+        <div class="news-card">
+          ${item.image ? `<img src="${item.image}" alt="${item.title}" class="news-image">` : ""}
+          <h3>${item.title}</h3>
+          <small>${item.date}</small>
+          <p><a href="${item.link}" target="_blank">Read Full Story →</a></p>
+        </div>
+      `;
+    });
   });
