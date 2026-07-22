@@ -14,7 +14,7 @@ fetch("news.json")
           <h3>${item.title}</h3>
 <small>${item.date}</small>
 <p>${item.summary}</p>
-<p><a href="${item.link}" target="_blank">Read Full Story →</a></p>
+<p><a href="${item.link}" target="_blank" class="read-more">Read Full Story →</a></p>
         </div>
       `;
     });
