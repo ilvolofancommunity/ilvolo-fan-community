@@ -434,3 +434,29 @@ margin-bottom:15px;
     font-weight: bold;
     text-decoration: none;
 }
+.concerts {
+    padding: 60px 20px;
+    background: #ffffff;
+    text-align: center;
+}
+
+#concert-list {
+    max-width: 900px;
+    margin: auto;
+}
+
+.concert-card {
+    background: #f8f8f8;
+    border-radius: 12px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.concert-card h3 {
+    margin-top: 0;
+}
+
+.concert-card p {
+    margin: 8px 0;
+}
