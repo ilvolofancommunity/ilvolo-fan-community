@@ -23,7 +23,7 @@ for item in entries[:6]:
         "date": parsedate_to_datetime(item.published).strftime("%d %B %Y"),
         "summary": re.sub("<.*?>", "", getattr(item, "summary", ""))[:180] + "...",
         "link": item.link,
-        "image": "images/ilvolo-default.jpg"
+        "image": "images/ilvolo-default.png"
     })
 
 with open("news.json", "w", encoding="utf-8") as f:
