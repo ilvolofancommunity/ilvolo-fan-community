@@ -25,7 +25,7 @@ for item in feed.entries[:6]:
         "date": parsedate_to_datetime(item.published).strftime("%d %B %Y"),
         "summary": re.sub("<.*?>", "", getattr(item, "summary", ""))[:180] + "...",
         "link": item.link,
-        "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Music_Notes.svg"
+        "image": "https://upload.wikimedia.org/wikipedia/commons/3/3b/Il_Volo_2015.jpg"
     })
 
 with open("news.json", "w", encoding="utf-8") as f:
