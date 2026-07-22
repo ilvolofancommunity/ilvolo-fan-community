@@ -6,14 +6,14 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-news: 
+  update-news:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-          - name: Run news updater
+      - name: Run news updater
         run: |
           python scripts/update-news.py
 
