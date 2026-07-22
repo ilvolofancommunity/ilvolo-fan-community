@@ -460,3 +460,17 @@ margin-bottom:15px;
 .concert-card p {
     margin: 8px 0;
 }
+.read-more {
+    display: inline-block;
+    margin: 15px;
+    padding: 10px 20px;
+    background: #c9a227;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    font-weight: bold;
+}
+
+.read-more:hover {
+    opacity: 0.8;
+}
