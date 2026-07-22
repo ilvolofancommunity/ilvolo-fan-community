@@ -1,17 +1,26 @@
 import json
 import feedparser
+from email.utils import parsedate_to_datetime
 
-feed = feedparser.parse("https://news.google.com/rss/search?q=IL+VOLO")
+feed = feedparser.parse(
+    "https://news.google.com/rss/search?q=IL+VOLO&hl=en-US&gl=US&ceid=US:en"
+)
 
 news = []
 
-for item in feed.entries[:6]:
+entries = sorted(
+    feed.entries,
+    key=lambda x: parsedate_to_datetime(x.published),
+    reverse=True
+)
+
+for item in entries[:6]:
     news.append({
         "title": item.title,
-        "date": item.published,
+        "date": parsedate_to_datetime(item.published).strftime("%d %B %Y"),
         "summary": getattr(item, "summary", ""),
         "link": item.link,
-        "image": ""
+        "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Music_Notes.svg"
     })
 
 with open("news.json", "w", encoding="utf-8") as f:
