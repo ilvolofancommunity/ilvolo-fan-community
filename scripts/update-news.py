@@ -1,5 +1,6 @@
 import json
 import feedparser
+import re
 from email.utils import parsedate_to_datetime
 
 feed = feedparser.parse(
@@ -18,7 +19,7 @@ for item in entries[:6]:
     news.append({
         "title": item.title,
         "date": parsedate_to_datetime(item.published).strftime("%d %B %Y"),
-        "summary": getattr(item, "summary", ""),
+        "summary": re.sub("<.*?>", "", getattr(item, "summary", ""))[:180] + "...",
         "link": item.link,
         "image": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Music_Notes.svg"
     })
