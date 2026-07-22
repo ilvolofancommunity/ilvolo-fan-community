@@ -15,7 +15,11 @@ entries = sorted(
     reverse=True
 )
 
-for item in entries[:6]:
+from datetime import datetime
+
+today = datetime.utcnow().strftime("%a, %d %b %Y %H:%M:%S GMT")
+
+for item in feed.entries[:6]:
     news.append({
         "title": item.title,
         "date": parsedate_to_datetime(item.published).strftime("%d %B %Y"),
