@@ -507,11 +507,14 @@ margin-bottom:15px;
 .member-card h3 {
     margin: 20px 0 10px;
     font-size: 24px;
+    color: #1f1f1f;
+    font-weight: 700;
 }
 
 .member-card p {
     padding: 0 20px;
     line-height: 1.6;
+    color: #555;
 }
 
 .member-card a {
