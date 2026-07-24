@@ -1,32 +1,12 @@
 import requests
 
-URL = "https://www.ilvolomusic.com/tour/"
+html = requests.get(
+    "https://www.ilvolomusic.com/tour/",
+    headers={"User-Agent":"Mozilla/5.0"}
+).text
 
-headers = {
-    "User-Agent": "Mozilla/5.0"
-}
+keyword = "qodef-e-month"
 
-response = requests.get(URL, headers=headers)
-response.raise_for_status()
+index = html.find(keyword)
 
-html = response.text
-
-keywords = [
-    "ESTE",
-    "THESSALONIKI",
-    "CORFU",
-    "World Tour",
-    "BUY VIP",
-    "GIS"
-]
-
-for keyword in keywords:
-    print(f"\nSearching for: {keyword}")
-    index = html.upper().find(keyword.upper())
-
-    if index == -1:
-        print("Not found")
-    else:
-        start = max(0, index - 300)
-        end = min(len(html), index + 800)
-        print(html[start:end])
+print(html[index-1000:index+4000])
