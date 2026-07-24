@@ -28,20 +28,122 @@ fetch("news.json")
   fetch("concerts.json")
   .then(response => response.json())
   .then(concerts => {
+
     const concertList = document.getElementById("concert-list");
 
     if (!concertList) return;
 
     concertList.innerHTML = "";
 
-    concerts.forEach(concert => {
-      concertList.innerHTML += `
-        <div class="concert-card">
-          <h3>${concert.city} ${concert.country}</h3>
-          <p><strong>Date:</strong> ${concert.date}</p>
-          <p><strong>Venue:</strong> ${concert.venue}</p>
-        </div>
+    const today = new Date();
+
+    today.setHours(0,0,0,0);
+
+    const upcomingConcerts = concerts
+
+      .filter(concert => {
+
+        const concertDate = new Date(concert.dateISO);
+
+        return concertDate >= today;
+
+      })
+
+      .sort((a,b)=>new Date(a.dateISO)-new Date(b.dateISO));
+
+    if(upcomingConcerts.length===0){
+
+      concertList.innerHTML=`
+
+      <div class="concert-card">
+
+      <h3>🎤 No Upcoming Concerts</h3>
+
+      <p>Please check back soon for the latest official IL VOLO tour announcements.</p>
+
+      </div>
+
       `;
+
+      return;
+
+    }
+
+    upcomingConcerts.forEach(concert=>{
+
+      concertList.innerHTML+=`
+
+      <div class="concert-card">
+
+        <h3>🎤 ${concert.city}</h3>
+
+        <p>📅 <strong>${concert.date}</strong></p>
+
+        <p>📍 ${concert.venue}</p>
+
+        <p>🌍 ${concert.country}</p>
+
+        <div class="ticket-info">
+
+          <h4>🎟 Tickets & Fan Information</h4>
+
+          <div class="ticket-buttons">
+
+            <a class="email-btn"
+               href="mailto:ilvolomusic425@gmail.com">
+
+               📧 Email Management
+
+            </a>
+
+            <a class="telegram-btn"
+               href="https://t.me/ilvolo_fan_community"
+               target="_blank">
+
+               📲 Telegram
+
+            </a>
+
+            <a class="zangi-btn"
+               href="https://zangi.com/dl/conversation/9402253010"
+               target="_blank">
+
+               📞 Zangi
+
+            </a>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      `;
+
     });
+
   })
-  .catch(error => console.error(error));
+
+  .catch(error=>{
+
+    console.error(error);
+
+    const concertList=document.getElementById("concert-list");
+
+    if(concertList){
+
+      concertList.innerHTML=`
+
+      <div class="concert-card">
+
+      <h3>Unable to Load Concerts</h3>
+
+      <p>Please try again later.</p>
+
+      </div>
+
+      `;
+
+    }
+
+  });
