@@ -267,3 +267,100 @@ font-size:17px;
 color:#555;
 font-weight:600;
 }
+/* =====================================================
+   CONCERT CARDS VERSION 2.0
+===================================================== */
+
+.concerts{
+    background:#f8f8f8;
+}
+
+#concert-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+    gap:30px;
+    margin-top:40px;
+}
+
+.concert-card{
+    background:#ffffff;
+    border-radius:18px;
+    padding:28px;
+    box-shadow:0 10px 25px rgba(0,0,0,.10);
+    transition:.35s;
+    border-top:5px solid #d4af37;
+}
+
+.concert-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 18px 35px rgba(0,0,0,.15);
+}
+
+.concert-card h3{
+    font-size:25px;
+    color:#111827;
+    margin-bottom:18px;
+}
+
+.concert-card p{
+    font-size:16px;
+    margin:10px 0;
+    color:#555;
+}
+
+.ticket-info{
+    margin-top:22px;
+    padding-top:18px;
+    border-top:1px solid #e5e5e5;
+}
+
+.ticket-info h4{
+    color:#d4af37;
+    font-size:18px;
+    margin-bottom:15px;
+}
+
+.ticket-buttons{
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+}
+
+.ticket-buttons a{
+    display:block;
+    text-align:center;
+    padding:12px;
+    border-radius:10px;
+    font-weight:bold;
+    color:white;
+    transition:.3s;
+}
+
+.email-btn{
+    background:#b8860b;
+}
+
+.telegram-btn{
+    background:#229ED9;
+}
+
+.zangi-btn{
+    background:#198754;
+}
+
+.ticket-buttons a:hover{
+    transform:translateY(-2px);
+    opacity:.92;
+}
+
+@media(max-width:768px){
+
+.concert-card{
+    padding:22px;
+}
+
+.concert-card h3{
+    font-size:22px;
+}
+
+}
