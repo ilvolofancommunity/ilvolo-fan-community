@@ -24,6 +24,7 @@ jobs:
       - name: Run news updater
         run: |
           python scripts/update-news.py
+          python scripts/update_concerts.py
 
       - name: Commit updated news
         run: |
