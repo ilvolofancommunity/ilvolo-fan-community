@@ -1,155 +1,39 @@
-[
-  {
-    "city": "Malaga",
-    "country": "Spain",
-    "venue": "Plaza de Toros de la Malagueta",
-    "date": "19 July 2026",
-    "dateISO": "2026-07-19"
-  },
-  {
-    "city": "Murcia",
-    "country": "Spain",
-    "venue": "Plaza de Toros",
-    "date": "21 July 2026",
-    "dateISO": "2026-07-21"
-  },
-  {
-    "city": "Cattolica (RN)",
-    "country": "Italy",
-    "venue": "Arena Regina",
-    "date": "23 July 2026",
-    "dateISO": "2026-07-23"
-  },
-  {
-    "city": "Este (PD)",
-    "country": "Italy",
-    "venue": "Este Music Festival - Castello Carrarese",
-    "date": "25 July 2026",
-    "dateISO": "2026-07-25"
-  },
-  {
-    "city": "Thessaloniki",
-    "country": "Greece",
-    "venue": "City Theatre Gis",
-    "date": "27 July 2026",
-    "dateISO": "2026-07-27"
-  },
-  {
-    "city": "Corfu",
-    "country": "Greece",
-    "venue": "Church St. George (Old Fortress)",
-    "date": "29 July 2026",
-    "dateISO": "2026-07-29"
-  },
-  {
-    "city": "Codroipo (UD)",
-    "country": "Italy",
-    "venue": "Villa Manin",
-    "date": "31 July 2026",
-    "dateISO": "2026-07-31"
-  },
-  {
-    "city": "Forte dei Marmi (LU)",
-    "country": "Italy",
-    "venue": "Villa Bertelli Live",
-    "date": "02 August 2026",
-    "dateISO": "2026-08-02"
-  },
-  {
-    "city": "Barletta (BT)",
-    "country": "Italy",
-    "venue": "Fossato del Castello",
-    "date": "07 August 2026",
-    "dateISO": "2026-08-07"
-  },
-  {
-    "city": "Alghero (SS)",
-    "country": "Italy",
-    "venue": "Anfiteatro Ivan Graziani - Alguer Summer Festival",
-    "date": "09 August 2026",
-    "dateISO": "2026-08-09"
-  },
-  {
-    "city": "Taormina (ME)",
-    "country": "Italy",
-    "venue": "Teatro Antico",
-    "date": "22 August 2026",
-    "dateISO": "2026-08-22"
-  },
-  {
-    "city": "Taormina (ME)",
-    "country": "Italy",
-    "venue": "Teatro Antico",
-    "date": "23 August 2026",
-    "dateISO": "2026-08-23"
-  },
-  {
-    "city": "Lanciano (CH)",
-    "country": "Italy",
-    "venue": "Parco Villa delle Rose",
-    "date": "27 August 2026",
-    "dateISO": "2026-08-27"
-  },
-  {
-    "city": "Macerata (MC)",
-    "country": "Italy",
-    "venue": "Sferisterio",
-    "date": "28 August 2026",
-    "dateISO": "2026-08-28"
-  },
-  {
-    "city": "Brescia (BS)",
-    "country": "Italy",
-    "venue": "Piazza della Loggia",
-    "date": "06 September 2026",
-    "dateISO": "2026-09-06"
-  },
-  {
-    "city": "Caserta (CE)",
-    "country": "Italy",
-    "venue": "Reggia di Caserta",
-    "date": "08 September 2026",
-    "dateISO": "2026-09-08"
-  }
+import json
+import requests
+from bs4 import BeautifulSoup
+from datetime import datetime
 
-,
-{
-  "city": "Milan",
-  "country": "Italy",
-  "venue": "Unipol Forum",
-  "date": "07 December 2026",
-  "dateISO": "2026-12-07"
-},
-{
-  "city": "Florence",
-  "country": "Italy",
-  "venue": "Nelson Mandela Forum",
-  "date": "12 December 2026",
-  "dateISO": "2026-12-12"
-},
-{
-  "city": "Rome",
-  "country": "Italy",
-  "venue": "Palazzo dello Sport",
-  "date": "17 December 2026",
-  "dateISO": "2026-12-17"
-},
-{
-  "city": "Turin",
-  "country": "Italy",
-  "venue": "Inalpi Arena",
-  "date": "19 December 2026",
-  "dateISO": "2026-12-19"
-},
-{
-  "city": "Bologna",
-  "country": "Italy",
-  "venue": "Unipol Arena",
-  "date": "20 December 2026",
-  "dateISO": "2026-12-20"
+URL = "https://www.ilvolomusic.com/tour/"
+
+HEADERS = {
+    "User-Agent": "Mozilla/5.0"
 }
 
-# Find all possible concert cards
+MONTHS = {
+    "Jan": 1,
+    "Feb": 2,
+    "Mar": 3,
+    "Apr": 4,
+    "May": 5,
+    "Jun": 6,
+    "Jul": 7,
+    "Aug": 8,
+    "Sep": 9,
+    "Oct": 10,
+    "Nov": 11,
+    "Dec": 12
+}
+
+response = requests.get(URL, headers=HEADERS, timeout=30)
+response.raise_for_status()
+
+with open("tour_page.html", "w", encoding="utf-8") as f:
+    f.write(response.text)
+
+soup = BeautifulSoup(response.text, "html.parser")
+
+concerts = []
+today = datetime.today().date()
 cards = soup.select("div.qodef-grid-item")
 
 for card in cards:
@@ -157,7 +41,7 @@ for card in cards:
     title = card.select_one(".qodef-e-title")
     date_box = card.select_one(".qodef-e-date")
 
-    if not title or not date_box:
+    if title is None or date_box is None:
         continue
 
     months = date_box.select(".qodef-e-month")
@@ -166,33 +50,34 @@ for card in cards:
     if len(months) < 2 or day is None:
         continue
 
-    month_name = months[0].get_text(strip=True)[:3]
+    month_text = months[0].get_text(strip=True)[:3]
     year_text = months[1].get_text(strip=True)
     day_text = day.get_text(strip=True)
 
-    if month_name not in MONTHS:
+    if month_text not in MONTHS:
         continue
 
     try:
         event_date = datetime(
             int(year_text),
-            MONTHS[month_name],
+            MONTHS[month_text],
             int(day_text)
         ).date()
     except Exception:
         continue
 
-    # Ignore concerts that have already passed
     if event_date < today:
         continue
 
-    city = title.get_text(" ", strip=True)
+        city = title.get_text(" ", strip=True)
 
     venue = ""
     venue_tag = title.find("sup")
-    if venue_tag:
-        venue = venue_tag.get_text(" ", strip=True)
-        city = city.replace(venue, "").strip()
+
+        if event_date < today:
+        continue
+
+    city = title.get_text(" ", strip=True)
 
     concerts.append({
         "event_date": event_date,
@@ -204,31 +89,20 @@ COUNTRIES = {
     "Este": "Italy",
     "Taormina": "Italy",
     "Rome": "Italy",
-    "Verona": "Italy",
     "Florence": "Italy",
+    "Milan": "Italy",
+    "Turin": "Italy",
+    "Bologna": "Italy",
+    "Caserta": "Italy",
+    "Barletta": "Italy",
+    "Alghero": "Italy",
+    "Macerata": "Italy",
+    "Lanciano": "Italy",
+    "Codroipo": "Italy",
+    "Forte dei Marmi": "Italy",
+    "Brescia": "Italy",
     "Thessaloniki": "Greece",
-    "Corfu": "Greece",
-    "Athens": "Greece",
-    "Sofia": "Bulgaria",
-    "Plovdiv": "Bulgaria",
-    "Bucharest": "Romania",
-    "Cluj": "Romania",
-    "Warsaw": "Poland",
-    "Krakow": "Poland",
-    "Prague": "Czech Republic",
-    "Bratislava": "Slovakia",
-    "Budapest": "Hungary",
-    "Zagreb": "Croatia",
-    "Ljubljana": "Slovenia",
-    "Vienna": "Austria",
-    "Munich": "Germany",
-    "Berlin": "Germany",
-    "Paris": "France",
-    "Madrid": "Spain",
-    "Barcelona": "Spain",
-    "Lisbon": "Portugal",
-    "London": "United Kingdom",
-    "Dublin": "Ireland"
+    "Corfu": "Greece"
 }
 
 final_concerts = []
