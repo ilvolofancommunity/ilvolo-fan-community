@@ -1,4 +1,3 @@
-import json
 import requests
 from bs4 import BeautifulSoup
 
@@ -11,12 +10,10 @@ headers = {
 response = requests.get(URL, headers=headers)
 response.raise_for_status()
 
-soup = BeautifulSoup(response.text, "html.parser")
+html = response.text
 
-print("Official IL VOLO Tour page downloaded successfully.")
-print("Page title:", soup.title.string if soup.title else "No title found")
+print("Length of page:", len(html))
 
-with open("tour_page.html", "w", encoding="utf-8") as f:
-    f.write(response.text)
+print("\n========== FIRST 5000 CHARACTERS ==========\n")
 
-print("Saved page as tour_page.html")
+print(html[:5000])
