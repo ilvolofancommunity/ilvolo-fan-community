@@ -1,12 +1,26 @@
 import requests
+from bs4 import BeautifulSoup
 
-html = requests.get(
-    "https://www.ilvolomusic.com/tour/",
-    headers={"User-Agent":"Mozilla/5.0"}
-).text
+URL = "https://www.ilvolomusic.com/tour/"
 
-keyword = "qodef-e-month"
+response = requests.get(
+    URL,
+    headers={"User-Agent": "Mozilla/5.0"}
+)
 
-index = html.find(keyword)
+response.raise_for_status()
 
-print(html[index-1000:index+4000])
+soup = BeautifulSoup(response.text, "html.parser")
+
+classes = set()
+
+for tag in soup.find_all(True):
+    cls = tag.get("class")
+    if cls:
+        classes.update(cls)
+
+print("========== CLASSES CONTAINING 'qodef' ==========")
+
+for cls in sorted(classes):
+    if "qodef" in cls.lower():
+        print(cls)
