@@ -1,5 +1,4 @@
 import requests
-from bs4 import BeautifulSoup
 
 URL = "https://www.ilvolomusic.com/tour/"
 
@@ -12,8 +11,22 @@ response.raise_for_status()
 
 html = response.text
 
-print("Length of page:", len(html))
+keywords = [
+    "ESTE",
+    "THESSALONIKI",
+    "CORFU",
+    "World Tour",
+    "BUY VIP",
+    "GIS"
+]
 
-print("\n========== FIRST 5000 CHARACTERS ==========\n")
+for keyword in keywords:
+    print(f"\nSearching for: {keyword}")
+    index = html.upper().find(keyword.upper())
 
-print(html[:5000])
+    if index == -1:
+        print("Not found")
+    else:
+        start = max(0, index - 300)
+        end = min(len(html), index + 800)
+        print(html[start:end])
