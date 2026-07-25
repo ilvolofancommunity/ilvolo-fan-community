@@ -124,10 +124,13 @@ def parse_concerts(html):
     cards = soup.select("div.qodef-e.qodef-grid-item")
 
     print(f"Found {len(cards)} concert cards.")
-if cards:
-    print("\n========== FIRST CONCERT HTML ==========\n")
-    print(cards[0].prettify())
-    print("\n========== END HTML ==========\n")
+
+    # Temporary debug (Version 3)
+    if cards:
+        print("\n========== FIRST CONCERT HTML ==========\n")
+        print(cards[0].prettify())
+        print("\n========== END HTML ==========\n")
+
     concerts = []
 
     today = datetime.today().date()
@@ -151,7 +154,7 @@ if cards:
 
         try:
             day_number = int(day.get_text(strip=True))
-        except:
+        except ValueError:
             continue
 
         if month not in MONTHS:
@@ -163,7 +166,6 @@ if cards:
                 MONTHS[month],
                 day_number
             ).date()
-
         except Exception:
             continue
 
@@ -185,24 +187,17 @@ if cards:
         venue = clean_text(venue)
 
         concerts.append({
-
             "dateISO": event_date.strftime("%Y-%m-%d"),
-
             "date": event_date.strftime("%d %B %Y"),
-
             "city": city,
-
             "country": detect_country(city),
-
             "venue": venue,
-
             "email": EMAIL,
-
             "telegram": TELEGRAM,
-
             "zangi": ZANGI
+        })
 
-           return concerts
+    return concerts
 
 
 # ==========================================================
