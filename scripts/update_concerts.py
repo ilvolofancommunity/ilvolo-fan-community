@@ -166,25 +166,24 @@ def parse_concerts(html):
                 MONTHS[month],
                 day_number
             ).date()
-        except Exception:
+                except Exception:
             continue
 
         if event_date < today:
             continue
 
-        full_title = clean_text(title.get_text(" ", strip=True))
-
-        parts = full_title.split(" ", 2)
-
-        city = full_title
+        city = ""
         venue = ""
 
-        if len(parts) >= 3:
-            city = f"{parts[0]} {parts[1]}"
-            venue = parts[2]
+        title_main = title.find("span")
 
-        city = clean_text(city)
-        venue = clean_text(venue)
+        if title_main:
+            city = clean_text(title_main.get_text())
+
+        venue_tag = title.find("sup")
+
+        if venue_tag:
+            venue = clean_text(venue_tag.get_text())
 
         concerts.append({
             "dateISO": event_date.strftime("%Y-%m-%d"),
