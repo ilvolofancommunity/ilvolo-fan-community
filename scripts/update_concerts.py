@@ -40,7 +40,18 @@ def main():
     soup = BeautifulSoup(html, "html.parser")
 
     print("Page downloaded successfully.")
-    print("Page size:", len(html), "characters")
+
+    cards = soup.select("div.qodef-e.qodef-grid-item")
+
+    print(f"Found {len(cards)} concert cards.")
+
+    for i, card in enumerate(cards[:5], start=1):
+
+        print("\n------------------")
+        print(f"Concert {i}")
+        print("------------------")
+
+        print(card.get_text(" ", strip=True))
 
 
 if __name__ == "__main__":
