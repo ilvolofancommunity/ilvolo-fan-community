@@ -56,7 +56,12 @@ def main():
         })
 
     print(f"Collected {len(concerts)} concerts.")
+print("\n========== FIRST 10 RAW CONCERTS ==========\n")
 
+for i, concert in enumerate(concerts[:10], start=1):
+    print(f"{i}. {concert['raw']}")
+
+print("\n========== END ==========\n")
     with open("concerts_raw.json", "w", encoding="utf-8") as f:
         json.dump(concerts, f, indent=4, ensure_ascii=False)
 
