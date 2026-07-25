@@ -45,13 +45,22 @@ def main():
 
     print(f"Found {len(cards)} concert cards.")
 
-    for i, card in enumerate(cards[:5], start=1):
+    concerts = []
 
-        print("\n------------------")
-        print(f"Concert {i}")
-        print("------------------")
+for card in cards:
 
-        print(card.get_text(" ", strip=True))
+    text = card.get_text(" ", strip=True)
+
+    concerts.append({
+        "raw": text
+    })
+
+print(f"Collected {len(concerts)} concerts.")
+
+with open("concerts_raw.json", "w", encoding="utf-8") as f:
+    json.dump(concerts, f, indent=4, ensure_ascii=False)
+
+print("concerts_raw.json created.")
 
 
 if __name__ == "__main__":
