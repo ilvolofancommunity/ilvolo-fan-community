@@ -1,39 +1,47 @@
 import json
 import requests
 from bs4 import BeautifulSoup
+from datetime import datetime
 
 URL = "https://www.ilvolomusic.com/tour/"
 
-headers = {
+HEADERS = {
     "User-Agent": "Mozilla/5.0"
 }
 
-response = requests.get(URL, headers=headers, timeout=30)
-response.raise_for_status()
+EMAIL = "mailto:ilvolomusic425@gmail.com"
+TELEGRAM = "https://t.me/ilvolo_fan_community"
+ZANGI = "https://zangi.com/dl/conversation/9402253010"
 
-with open("tour_page.html", "w", encoding="utf-8") as f:
-    f.write(response.text)
 
-soup = BeautifulSoup(response.text, "html.parser")
+def download_page():
+    print("Downloading IL VOLO tour page...")
 
-concerts = []
+    response = requests.get(
+        URL,
+        headers=HEADERS,
+        timeout=30
+    )
 
-cards = soup.select("div.qodef-grid-item")
+    response.raise_for_status()
 
-for card in cards:
+    return response.text
 
-    title = card.select_one(".qodef-e-title")
-    date = card.select_one(".qodef-e-date")
 
-    if not title or not date:
-        continue
+def save_html(html):
+    with open("tour_page.html", "w", encoding="utf-8") as f:
+        f.write(html)
 
-    concerts.append({
-        "city": title.get_text(" ", strip=True),
-        "date": date.get_text(" ", strip=True)
-    })
 
-with open("concerts.json", "w", encoding="utf-8") as f:
-    json.dump(concerts, f, indent=4, ensure_ascii=False)
+def main():
+    html = download_page()
+    save_html(html)
 
-print(f"Saved {len(concerts)} concerts.")
+    soup = BeautifulSoup(html, "html.parser")
+
+    print("Page downloaded successfully.")
+    print("Page size:", len(html), "characters")
+
+
+if __name__ == "__main__":
+    main()
