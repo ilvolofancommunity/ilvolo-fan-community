@@ -124,7 +124,10 @@ def parse_concerts(html):
     cards = soup.select("div.qodef-e.qodef-grid-item")
 
     print(f"Found {len(cards)} concert cards.")
-
+if cards:
+    print("\n========== FIRST CONCERT HTML ==========\n")
+    print(cards[0].prettify())
+    print("\n========== END HTML ==========\n")
     concerts = []
 
     today = datetime.today().date()
