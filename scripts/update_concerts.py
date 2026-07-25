@@ -47,20 +47,20 @@ def main():
 
     concerts = []
 
-for card in cards:
+    for card in cards:
 
-    text = card.get_text(" ", strip=True)
+        text = card.get_text(" ", strip=True)
 
-    concerts.append({
-        "raw": text
-    })
+        concerts.append({
+            "raw": text
+        })
 
-print(f"Collected {len(concerts)} concerts.")
+    print(f"Collected {len(concerts)} concerts.")
 
-with open("concerts_raw.json", "w", encoding="utf-8") as f:
-    json.dump(concerts, f, indent=4, ensure_ascii=False)
+    with open("concerts_raw.json", "w", encoding="utf-8") as f:
+        json.dump(concerts, f, indent=4, ensure_ascii=False)
 
-print("concerts_raw.json created.")
+    print("concerts_raw.json created.")
 
 
 if __name__ == "__main__":
