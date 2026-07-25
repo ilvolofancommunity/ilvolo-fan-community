@@ -166,7 +166,7 @@ def parse_concerts(html):
                 MONTHS[month],
                 day_number
             ).date()
-                except Exception:
+        except Exception:
             continue
 
         if event_date < today:
