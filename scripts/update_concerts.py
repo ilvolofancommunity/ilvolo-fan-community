@@ -202,9 +202,7 @@ if cards:
 
             "zangi": ZANGI
 
-        })
-
-    return concerts
+           return concerts
 
 
 # ==========================================================
